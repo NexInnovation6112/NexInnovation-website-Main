@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concave Mirror Simulator (અંતર્ગોળ અરીસો)</title>
+
+  <!-- PRIMARY SEO -->
+  <title>Concave Mirror Simulator - Ray Optics Lab (અંતર્ગોળ અરીસો)</title>
+  <meta name="description" content="Free Concave Mirror Simulator. Drag objects to see real vs virtual images, verify mirror formula, and download observation tables for Physics lab.">
+  <meta name="keywords" content="Concave Mirror Simulator, Mirror Formula Calculator, Ray Optics, Class 12 Physics Practical, Concave Mirror Image Formation">
+  
+  <!-- ROBOTS -->
+  <meta name="robots" content="index, follow">
+  
+  <!-- SOCIAL MEDIA / WHATSAPP PREVIEW -->
+  <meta property="og:title" content="Concave Mirror Simulator - NexInnovation">
+  <meta property="og:description" content="Master the Mirror Formula with this interactive tool. Visualize ray diagrams and check your lab readings instantly.">
+  <meta property="og:url" content="https://nexinnovation.in/practicals/concave-mirror.html">
+  <meta property="og:type" content="article">
+  
+  <!-- Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- html2pdf Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      padding: 0;
+      margin: 0;
+      color: #1e293b;
+    }
+
+    /* --- NAVIGATION BAR --- */
+    nav {
+      height: 80px;
+      background-color: #1f2937;
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 60;
+      width: 100%;
+      display: block;
+    }
+
+    .nav-container {
+      max-width: auto;
+      margin: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media (min-width: 768px) {
+      .nav-container {
+        margin: 0 50px;
+      }
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #60a5fa;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Navigation Groups & Triggers */
+    .nav-group {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-trigger {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background-color 0.2s;
+      color: #e5e7eb;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 20;
+    }
+
+    .nav-trigger:hover,
+    .nav-group:hover .nav-trigger {
+      background-color: #374151;
+      color: white;
+    }
+
+    /* --- DROPDOWN MENUS (The Bridge Fix) --- */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 320px;
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e5e7eb;
+      display: none;
+      padding: 4px 0;
+      margin-top: 5px;
+      z-index: 50;
+    }
+
+    .dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: transparent;
+    }
+
+    .nav-group:hover .dropdown-menu {
+      display: block;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .dropdown-item,
+    .dropdown-item-stacked {
+      display: flex;
+      padding: 10px 16px;
+      color: #374151;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      position: relative;
+    }
+
+    .dropdown-item {
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dropdown-item-stacked {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+    }
+
+    .dropdown-item-stacked:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-item:hover,
+    .dropdown-item-stacked:hover {
+      background-color: #eff6ff;
+      color: #2563eb;
+      border-left-color: #2563eb;
+    }
+
+    /* --- SUBMENUS --- */
+    .dropdown-submenu-group {
+      position: relative;
+      width: 100%;
+    }
+
+    .dropdown-submenu-group:hover>.dropdown-item {
+      background-color: #f3f4f6;
+      color: #1f2937;
+      border-left-color: #9ca3af;
+      font-weight: 600;
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: -4px;
+      width: 320px;
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e5e7eb;
+      padding: 0;
+      margin-left: 5px;
+      z-index: 100;
+    }
+
+    .submenu::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      bottom: -10px;
+      left: -20px;
+      width: 25px;
+      background: transparent;
+    }
+
+    .dropdown-submenu-group:hover>.submenu {
+      display: block;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .nav-group.opens-left .dropdown-menu {
+      left: auto;
+      right: 0;
+    }
+
+    .nav-group.opens-left .submenu {
+      left: auto;
+      right: 100%;
+      margin-left: 0;
+      margin-right: 5px;
+    }
+
+    .nav-group.opens-left .submenu::before {
+      left: auto;
+      right: -20px;
+    }
+
+    /* --- Animation --- */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* --- Mobile & Layout --- */
+    .mobile-menu-btn {
+      display: block;
+    }
+
+    .desktop-menu {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+
+      .desktop-menu {
+        display: flex;
+      }
+    }
+
+    .mob-item,
+    .mob-sub-trigger {
+      display: block;
+      padding: 12px 16px;
+      border-bottom: 1px solid #374151;
+      color: #e5e7eb;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .mob-item-stacked {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #374151;
+      color: #e5e7eb;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .mob-item:hover,
+    .mob-item-stacked:hover,
+    .mob-sub-trigger:hover {
+      background-color: #374151;
+    }
+
+    .mob-sub-trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .mob-sub-content {
+      display: none;
+      background-color: #111827;
+    }
+
+    .mob-sub-content a,
+    .mob-sub-content .mob-sub-trigger {
+      padding-left: 32px;
+      color: #9ca3af;
+    }
+
+    .mob-sub-sub-content {
+      display: none;
+      background-color: #0f131a;
+    }
+
+    .mob-sub-sub-content a {
+      padding-left: 48px;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    /* --- WORKBENCH STYLES --- */
+    .bench-wrapper {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      user-select: none;
+      margin-bottom: 20px;
+      height: 550px;
+      width: 100%;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .bench-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #374151;
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+
+    .ray-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .component {
+      position: absolute;
+      top: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: left 0.05s linear;
+      z-index: 10;
+      width: 0;
+      height: 0;
+    }
+
+    #lens-el {
+      cursor: default;
+      z-index: 40;
+    }
+
+    #obj-pin {
+      z-index: 50;
+    }
+
+    .pin-base {
+      width: 14px;
+      height: 14px;
+      background-color: #1f2937;
+      border: 2px solid white;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      z-index: 30;
+      cursor: grab;
+      pointer-events: auto;
+    }
+
+    .pin-base:active {
+      cursor: grabbing;
+    }
+
+    /* --- HTML CSS ARROWS --- */
+    .css-arrow-stem {
+      position: absolute;
+      left: 50%;
+      width: 3px;
+      transform: translateX(-50%);
+      z-index: 25;
+    }
+
+    .css-arrow-head {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      z-index: 25;
+    }
+
+    #obj-arrow-stem {
+      bottom: 0;
+      transform-origin: bottom center;
+    }
+
+    #obj-arrow-head {
+      border-bottom: 15px solid #ef4444;
+    }
+
+    #img-arrow-stem {
+      transform-origin: center;
+    }
+
+    .pin-label {
+      position: absolute;
+      font-weight: bold;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      z-index: 40;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      border: 1px solid #e5e7eb;
+      line-height: 1.2;
+    }
+
+    .pin-obj .pin-label {
+      margin-bottom: 8px;
+      color: #ef4444;
+    }
+
+    .pin-obj .pin-base {
+      border-color: #ef4444;
+    }
+
+    .pin-img .pin-base {
+      border-color: #10b981;
+      cursor: default;
+    }
+
+    .pin-img .pin-label {
+      color: #10b981;
+    }
+
+    .focal-point {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: #4b5563;
+      border-radius: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    .focal-label {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      font-weight: bold;
+      color: #4b5563;
+    }
+
+    .two-f-point {
+      background-color: #374151;
+      width: 10px;
+      height: 10px;
+    }
+
+    .optic-shape {
+      fill: rgba(59, 130, 246, 0.1);
+      stroke: #3b82f6;
+      stroke-width: 2;
+    }
+
+    .ray {
+      fill: none;
+      stroke-width: 2;
+      opacity: 0.8;
+      stroke-linejoin: round;
+    }
+
+    .ray-virtual {
+      stroke-dasharray: 5, 3;
+      opacity: 0.5;
+    }
+
+    .ray-1 {
+      stroke: #ef4444;
+    }
+
+    .ray-2 {
+      stroke: #3b82f6;
+    }
+
+    .ray-3 {
+      stroke: #a855f7;
+    }
+
+    .input-readout {
+      background-color: #eff6ff;
+      border-color: #bfdbfe;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid;
+      text-align: center;
+    }
+
+    .input-box {
+      width: 80px;
+      height: 36px;
+      text-align: center;
+      font-weight: bold;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 4px;
+    }
+
+    .ruler-text {
+      font-size: 10px;
+      fill: #6b7280;
+      user-select: none;
+    }
+
+    .input-readout.interactive {
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .input-readout.interactive:hover {
+      background-color: #f0f9ff;
+      border-color: #60a5fa;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-readout.interactive:active {
+      transform: translateY(0);
+    }
+
+    .input-readout.interactive.active-ray-btn {
+      border-color: #3b82f6;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+    }
+
+    .toggle-track {
+      width: 44px;
+      height: 24px;
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+      position: relative;
+      transition: background-color 0.3s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .toggle-knob {
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    #toggle-rays:checked~.toggle-track {
+      background-color: #2563eb;
+    }
+
+    #toggle-rays:checked~.toggle-track .toggle-knob {
+      transform: translateX(20px);
+    }
+
+    #toggle-rays:checked~span {
+      color: #2563eb;
+    }
+
+    .pos-bar {
+      background-color: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pos-title {
+      color: #065f46;
+      font-weight: 800;
+      font-size: 1.1rem;
+      border-bottom: 2px solid #a7f3d0;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      width: 100%;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .pos-values {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media (min-width: 768px) {
+      .pos-bar {
+        flex-direction: row;
+        padding: 10px 20px;
+      }
+
+      .pos-title {
+        width: auto;
+        border-bottom: none;
+        margin-bottom: 0;
+        border-right: 2px solid #a7f3d0;
+        padding-right: 20px;
+        margin-right: 20px;
+        padding-bottom: 0;
+        text-align: left;
+      }
+
+      .pos-values {
+        justify-content: flex-start;
+        gap: 32px;
+        width: auto;
+      }
+    }
+
+    .pos-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .pos-label {
+      color: #047857;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .pos-box {
+      background: white;
+      border: 1px solid #d1fae5;
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-family: monospace;
+      font-weight: bold;
+      font-size: 1rem;
+      min-width: 80px;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .text-red {
+      color: #dc2626;
+    }
+
+    .text-blue {
+      color: #2563eb;
+    }
+
+    .text-green {
+      color: #16a34a;
+    }
+
+    .preset-btn {
+      padding: 8px 12px;
+      background-color: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4b5563;
+      transition: all 0.2s;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .preset-btn:hover {
+      background-color: #eff6ff;
+      color: #2563eb;
+      border-color: #bfdbfe;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .preset-btn.active-preset-btn {
+      background-color: #d8b4fe;
+      color: #581c87;
+      border-color: #a855f7;
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+    }
+
+    .obs-table-wrapper {
+      overflow-x: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .obs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 800px;
+    }
+
+    .obs-table th {
+      background-color: #f3f4f6;
+      color: #374151;
+      font-weight: 700;
+      padding: 10px 8px;
+      text-align: center;
+      border-bottom: 2px solid #e5e7eb;
+      white-space: nowrap;
+    }
+
+    .obs-table td {
+      padding: 8px;
+      text-align: center;
+      border-bottom: 1px solid #f3f4f6;
+      color: #1f2937;
+      font-weight: 500;
+    }
+
+    .obs-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .obs-table tr:nth-child(even) {
+      background-color: #f9fafb;
+    }
+
+    .guj-sub {
+      display: block;
+      font-size: 0.7rem;
+      color: #6b7280;
+      font-weight: normal;
+      margin-top: 2px;
+    }
+
+    .range-slider {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+    }
+
+    .sim-controls {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 180px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .sim-control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sim-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+
+    .sim-val {
+      font-size: 0.75rem;
+      color: #3b82f6;
+      font-weight: bold;
+      align-self: flex-end;
+      margin-top: -18px;
+    }
+
+    /* PDF Specific Styles */
+    .pdf-header {
+      display: none;
+    }
+
+    .pdf-mode .pdf-header {
+      display: block !important;
+      margin-bottom: 20px;
+    }
+
+    /* Hide interactive elements in PDF */
+    .pdf-mode nav,
+    .pdf-mode .mobile-menu-btn,
+    .pdf-mode .preset-btn-container,
+    .pdf-mode .sim-controls,
+    .pdf-mode #download-btn,
+    .pdf-mode .flex.gap-2 {
+      display: none !important;
+    }
+
+    .pdf-mode .main-content {
+      padding: 10px;
+      background: white;
+      width: 100%;
+    }
+
+    /* Clean up input boxes for PDF print */
+    .pdf-mode .control-bar input {
+      border: none;
+      background: transparent;
+      padding: 0;
+      width: 50px !important;
+      text-align: right;
+      margin-right: 4px;
+      -moz-appearance: textfield;
+    }
+
+    .pdf-mode .control-bar input::-webkit-outer-spin-button,
+    .pdf-mode .control-bar input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Force Page Breaks & Spacing */
+    .pdf-mode #bench {
+      page-break-inside: avoid;
+      page-break-before: always;
+      margin-top: 50px;
+      border: 1px solid #ccc;
+    }
+
+    .pdf-mode .obs-section {
+      page-break-inside: avoid;
+      page-break-before: always;
+      margin-top: 50px;
+    }
+
+    .pdf-mode .obs-table-wrapper {
+      display: block !important;
+    }
+
+    .pdf-mode .workspace-container {
+      box-shadow: none;
+      border: none;
+    }
+
+    /* Toast Notification Styles */
+    .toast-container {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      width: auto;
+      max-width: 90vw;
+    }
+
+    .toast {
+      background: white;
+      border-left: 4px solid;
+      padding: 12px 20px;
+      border-radius: 6px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      pointer-events: auto;
+      min-width: 350px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-error {
+      border-color: #ef4444;
+    }
+
+    .toast-error .toast-icon {
+      color: #ef4444;
+    }
+
+    .toast-success {
+      border-color: #10b981;
+    }
+
+    .toast-success .toast-icon {
+      color: #10b981;
+    }
+
+    .toast-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-grow: 1;
+    }
+
+    .toast-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1f2937;
+    }
+
+    .toast-msg {
+      font-size: 0.8rem;
+      color: #4b5563;
+      line-height: 1.4;
+    }
+
+    .toast-btn {
+      margin-left: 8px;
+      padding: 6px 16px;
+      background-color: #e5e7eb;
+      color: #374151;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .toast-btn:hover {
+      background-color: #d1d5db;
+    }
+
+    .toast-error .toast-btn {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .toast-error .toast-btn:hover {
+      background-color: #fecaca;
+    }
+  </style>
+</head>
+
+
+<body>
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Navbar -->
+  <nav id="main-nav">
+    <div class="nav-container">
+
+      <!-- Logo with Tooltip -->
+      <a href="https://nexinnovation.in" class="nav-logo group nex-tooltip nex-tooltip-bottom">
+        <img src="https://lh3.googleusercontent.com/p/AF1QipPcc7Jz7odcsxtYOP45v-RxdOVUWzssW9qpskAW=s680-w680-h510-rw"
+          alt="NexInnovation"
+          class="h-10 w-10 rounded-sm object-contain bg-white shadow-sm group-hover:scale-105 transition-transform" />
+        <div class="flex flex-col ml-3">
+          <span class="font-bold leading-tight">NexInnovation</span>
+          <span class="text-[10px] text-gray-400 uppercase tracking-wider">Physics Labs</span>
+        </div>
+      </a>
+
+      <button class="mobile-menu-btn text-white focus:outline-none" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+      <div class="desktop-menu gap-4">
+        <div class="nav-group opens-left">
+          <div class="nav-trigger">
+            12 Science
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="dropdown-menu">
+            <div class="dropdown-submenu-group">
+              <div class="dropdown-item">
+                <span>Optics</span>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+              </div>
+              <div class="submenu">
+                <a href="optics_simulator_convex_lens.html" class="dropdown-item-stacked">
+                  <span class="font-semibold text-gray-800">Finding focal length of Convex Lens Simulator</span>
+                  <span class="text-xs text-gray-500 font-normal">બહિર્ગોળ લેન્સની કેન્દ્રલંબાઈ શોધવી</span>
+                </a>
+                <a href="optics_simulator_concave_mirror.html" class="dropdown-item-stacked">
+                  <span class="font-semibold text-gray-800">Finding focal length of Concave Mirror Simulator</span>
+                  <span class="text-xs text-gray-500 font-normal">અંતર્ગોળ અરીસાની કેન્દ્રલંબાઈ શોધવી</span>
+                </a>
+                <a href="#" class="dropdown-item-stacked cursor-not-allowed opacity-60">
+                  <span class="font-semibold text-gray-800">Finding focal length of concave Lens (Soon)</span>
+                  <span class="text-xs text-gray-500 font-normal">અંતર્ગોળ લેન્સની કેન્દ્રલંબાઈ શોધવી</span>
+                </a>
+                <a href="#" class="dropdown-item-stacked cursor-not-allowed opacity-60">
+                  <span class="font-semibold text-gray-800">Finding focal length of Convex Mirror (Soon)</span>
+                  <span class="text-xs text-gray-500 font-normal">બહિર્ગોળ અરીસાની કેન્દ્રલંબાઈ શોધવી</span>
+                </a>
+              </div>
+            </div>
+            <div class="dropdown-submenu-group">
+              <div class="dropdown-item">
+                <span>Electronics</span><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+              </div>
+              <div class="submenu">
+                <a href="#" class="dropdown-item text-gray-400 cursor-not-allowed">Logic Gates (Soon)</a><a href="#"
+                  class="dropdown-item text-gray-400 cursor-not-allowed">PN Junction (Soon)</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-group opens-left">
+          <div class="nav-trigger" style="opacity: 0.8">
+            11 Science
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="dropdown-menu">
+            <div class="dropdown-submenu-group">
+              <div class="dropdown-item">
+                <span>Mechanics</span><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+              </div>
+              <div class="submenu">
+                <a href="#" class="dropdown-item-stacked cursor-not-allowed opacity-60">
+                  <span class="font-semibold text-gray-800">Vernier Caliper (Soon)</span>
+                  <span class="text-xs text-gray-500 font-normal"></span>
+                </a>
+                <a href="#" class="dropdown-item-stacked cursor-not-allowed opacity-60">
+                  <span class="font-semibold text-gray-800">Screw Gauge (Soon)</span>
+                  <span class="text-xs text-gray-500 font-normal"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Site Button -->
+        <a href="https://nexinnovation.in"
+          class="nex-tooltip nex-tooltip-bottom bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors shadow-lg shadow-blue-500/30 no-underline ml-4">
+          Main Site
+        </a>
+      </div>
+    </div>
+    <div id="mobile-menu"
+      class="hidden md:hidden bg-gray-800 absolute w-full left-0 top-full z-50 border-t border-gray-700">
+      <button onclick="toggleMobSub('mob-12')" class="mob-sub-trigger">
+        <span>12 Science</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div id="mob-12" class="mob-sub-content">
+        <button onclick="toggleMobSub('mob-12-opt')" class="mob-sub-trigger">
+          <span>Optics</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div id="mob-12-opt" class="mob-sub-sub-content">
+          <a href="convex-lens.html" class="mob-item-stacked"><span>Convex Lens</span><span
+              class="text-xs text-gray-400">બહિર્ગોળ લેન્સ</span></a>
+          <a href="concave-mirror.html" class="mob-item-stacked bg-gray-700"><span>Concave
+              Mirror</span><span class="text-xs text-gray-400">અંતર્ગોળ અરીસો</span></a>
+          <a href="#" class="mob-item-stacked text-gray-500">
+            <span>Concave Lens</span></a>
+          <a href="#" class="mob-item-stacked text-gray-500">
+            <span>Convex Mirror</span></a>
+        </div>
+        <button onclick="toggleMobSub('mob-12-elec')" class="mob-sub-trigger">
+          <span>Electronics</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div id="mob-12-elec" class="mob-sub-sub-content">
+          <a href="#" class="mob-item text-gray-500 cursor-not-allowed">Logic Gates (Soon)</a><a href="#"
+            class="mob-item text-gray-500 cursor-not-allowed">PN Junction (Soon)</a>
+        </div>
+      </div>
+      <button onclick="toggleMobSub('mob-11')" class="mob-sub-trigger">
+        <span>11 Science</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div id="mob-11" class="mob-sub-content">
+        <button onclick="toggleMobSub('mob-11-mech')" class="mob-sub-trigger">
+          <span>Mechanics</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div id="mob-11-mech" class="mob-sub-sub-content">
+          <a href="#" class="mob-item text-gray-500 cursor-not-allowed">Vernier Caliper</a>
+          <a href="#" class="mob-item text-gray-500 cursor-not-allowed">Screw Gauge</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content p-4 md:p-8">
+    <!-- PDF HEADER -->
+    <div class="pdf-header border-b-2 border-gray-800 pb-4">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <!-- Added crossorigin="anonymous" for PDF CORS -->
+          <img src="https://lh3.googleusercontent.com/p/AF1QipPcc7Jz7odcsxtYOP45v-RxdOVUWzssW9qpskAW=s680-w680-h510-rw"
+            class="h-16 w-16 object-contain" crossorigin="anonymous">
+          <div class="text-left">
+            <h1 class="text-2xl font-bold text-slate-800">NexInnovation Physics Practical</h1>
+            <p class="text-sm text-slate-600">Experiential Learning</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <p class="font-bold text-blue-600">www.nexinnovation.in</p>
+          <p class="text-xs text-gray-500">Date: <span id="pdf-date"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <header
+      class="bg-slate-800 text-white p-6 rounded-t-xl shadow-lg mb-6 workspace-container max-w-[1000px] mx-auto w-full">
+      <h1 class="text-2xl md:text-3xl font-bold text-center">Concave Mirror Simulator (અંતર્ગોળ અરીસો)</h1>
+      <p class="mt-1 text-slate-300 text-center">Mirror Formula & Magnification</p>
+      <div class="mt-4 flex flex-col items-center gap-2">
+        <h2 class="text-blue-300 font-bold text-sm uppercase tracking-widest border-b border-slate-600 pb-1 mb-1">
+          Equations</h2>
+        <div class="text-lg text-center"><span class="font-bold text-xs text-blue-400 uppercase mr-2">Mirror
+            Formula:</span><span class="font-serif italic text-white">1/f = 1/v + 1/u</span><span
+            class="mx-3 text-slate-500">|</span><span class="font-serif italic text-white">f = uv / (u + v)</span></div>
+        <div class="text-lg"><span class="font-bold text-xs text-blue-400 uppercase mr-2">Magnification:</span><span
+            class="font-serif italic text-white">m = -v/u</span></div>
+      </div>
+    </header>
+
+    <!-- INPUT CONTROL BAR -->
+    <div
+      class="workspace-container control-bar flex flex-col md:flex-row gap-4 justify-between items-center bg-blue-50 border border-blue-200 p-4 rounded-xl shadow-sm mb-6 max-w-[1000px] mx-auto w-full">
+      <div
+        class="flex flex-col items-center justify-center w-full md:w-1/4 border-b md:border-b-0 md:border-r border-blue-200 pb-4 md:pb-0 md:pr-4">
+        <div class="text-xs font-bold text-blue-600 uppercase mb-1">Mirror Pos (M)</div>
+        <div class="flex items-center gap-1"><input type="number" id="input-lens-pos" value="50"
+            class="input-box text-blue-700 bg-white border-blue-200" oninput="updateLensPos()"><span
+            class="text-sm font-bold text-gray-500">cm</span></div>
+      </div>
+      <div
+        class="flex flex-col items-center justify-center w-full md:w-1/4 border-b md:border-b-0 md:border-r border-blue-200 pb-4 md:pb-0 md:px-2">
+        <div class="text-xs font-bold text-blue-600 uppercase mb-1">Focal ($f$)</div>
+        <div class="flex items-center gap-1"><input type="number" id="input-f" value="15" min="5" max="40"
+            class="input-box text-blue-700 bg-white border-blue-200" oninput="updatePresetDisplay(); updateSim()"><span
+            class="text-sm font-bold text-gray-500">cm</span></div>
+      </div>
+      <div
+        class="flex flex-col items-center justify-center w-full md:w-1/4 border-b md:border-b-0 md:border-r border-blue-200 pb-4 md:pb-0 md:px-2">
+        <div class="text-xs font-bold text-red-600 uppercase mb-1">Obj Dist ($u$)</div>
+        <div class="flex items-center gap-1"><input type="number" id="input-u" value="-30" min="-80" max="-5"
+            class="input-box text-red-600 bg-white border-red-200" oninput="clearPresets(); updateSim()"><span
+            class="text-sm font-bold text-gray-500">cm</span></div>
+      </div>
+      <div class="flex flex-col items-center justify-center w-full md:w-1/4 pt-4 md:pt-0 md:pl-2">
+        <div class="text-xs font-bold text-green-600 uppercase mb-1">Img Dist ($v$)</div>
+        <div class="flex items-center gap-1"><span id="val-v" class="font-bold text-lg text-green-700">--</span><span
+            class="text-sm font-bold text-gray-500">cm</span></div>
+      </div>
+    </div>
+
+    <div
+      class="workspace-container bg-purple-50 border border-purple-200 p-4 rounded-xl shadow-sm mb-6 max-w-[1000px] mx-auto w-full preset-btn-container">
+      <div class="text-xs font-bold text-purple-600 uppercase mb-3 text-center">Standard Object Positions (વસ્તુનું
+        સ્થાન)</div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <button id="btn-infinity" onclick="setPreset('infinity', this)" class="preset-btn">At Infinity (અનંત
+          અંતરે)</button>
+        <button id="btn-beyond-c" onclick="setPreset('beyond-c', this)" class="preset-btn">Beyond C (C થી
+          દૂર)</button>
+        <button id="btn-at-c" onclick="setPreset('at-c', this)" class="preset-btn">At C (C પર)</button>
+        <button id="btn-between-f-c" onclick="setPreset('between-f-c', this)" class="preset-btn">Between F & C (F અને C
+          વચ્ચે)</button>
+        <button id="btn-at-f" onclick="setPreset('at-f', this)" class="preset-btn">At F (F પર)</button>
+        <button id="btn-between-f-p" onclick="setPreset('between-f-p', this)" class="preset-btn">Between F & P (F અને P
+          વચ્ચે)</button>
+      </div>
+    </div>
+
+    <div
+      class="workspace-container flex flex-col md:flex-row gap-4 justify-between items-center bg-indigo-50 border border-indigo-200 p-4 rounded-xl shadow-sm mb-6 max-w-[1000px] mx-auto w-full">
+      <div
+        class="text-center w-full md:w-1/2 border-b md:border-b-0 md:border-r border-indigo-200 pb-2 md:pb-0 md:pr-4">
+        <div class="text-xs font-bold text-indigo-600 uppercase mb-1">Image Type (પ્રતિબિંબનો પ્રકાર)</div>
+        <div id="img-type" class="font-bold text-lg text-indigo-900">--</div>
+      </div>
+      <div class="text-center w-full md:w-1/2 pt-2 md:pt-0 md:pl-4">
+        <div class="text-xs font-bold text-indigo-600 uppercase mb-1">Magnification (મોટવણી $m$)</div>
+        <div id="mag-val" class="font-bold text-lg text-indigo-900">--</div>
+      </div>
+    </div>
+
+    <div class="pos-bar workspace-container">
+      <div class="pos-title">Ruler Positions</div>
+      <div class="pos-values">
+        <div class="pos-group"><span class="pos-label">OBJECT</span>
+          <div class="pos-box text-red" id="pos-obj">--</div>
+        </div>
+        <div class="pos-group"><span class="pos-label">MIRROR</span>
+          <div class="pos-box text-blue" id="pos-lens">--</div>
+        </div>
+        <div class="pos-group"><span class="pos-label">IMAGE</span>
+          <div class="pos-box text-green" id="pos-img">--</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bench-wrapper workspace-container" id="bench">
+      <!-- Floating Sim Controls -->
+      <div class="sim-controls">
+        <div class="sim-control-group">
+          <div class="flex justify-between items-baseline"><span class="sim-label">Zoom</span><span id="zoom-val"
+              class="sim-val">4.0x</span></div>
+          <input type="range" id="zoom-slider" min="2" max="15" step="0.5" value="4" class="range-slider"
+            oninput="updateZoom()">
+        </div>
+
+        <div class="sim-control-group">
+          <div class="flex justify-between items-baseline"><span class="sim-label">Obj Height</span></div>
+          <input type="range" id="height-slider" min="20" max="120" step="5" value="80" class="range-slider bg-red-200"
+            oninput="updateHeight()">
+        </div>
+
+        <div class="sim-control-group pt-2 border-t border-slate-100">
+          <label class="flex items-center justify-between cursor-pointer group">
+            <span class="sim-label text-gray-600">Ray Diagram</span>
+            <div class="flex items-center gap-2">
+              <input type="checkbox" id="toggle-rays" class="sr-only peer" checked onchange="updateSim()">
+              <div class="toggle-track group-hover:bg-slate-200 transition-colors">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <svg class="ray-canvas" id="svg-canvas">
+        <!-- Mirror Curve -->
+        <path id="shape-lens" class="optic-shape" stroke="#3b82f6" fill="none" stroke-width="3" />
+        <!-- Back Hatching -->
+        <g id="mirror-hatch" stroke="#94a3b8" stroke-width="1"></g>
+
+        <path id="ray1" class="ray ray-1" />
+        <path id="ray2" class="ray ray-2" />
+        <path id="ray3" class="ray ray-3" />
+        <path id="ray1-virt" class="ray ray-1 ray-virtual" />
+        <path id="ray2-virt" class="ray ray-2 ray-virtual" />
+        <path id="ray3-virt" class="ray ray-3 ray-virtual" />
+        <g id="dim-u" style="pointer-events: none;">
+          <line id="line-u" stroke="#ef4444" stroke-width="2" />
+          <line id="tick-u-start" stroke="#ef4444" stroke-width="2" />
+          <line id="tick-u-end" stroke="#ef4444" stroke-width="2" />
+          <text id="text-u" fill="#ef4444" font-size="12" font-weight="bold" text-anchor="middle"></text>
+          <line id="ext-u-start" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" />
+          <line id="ext-u-end" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" />
+        </g>
+        <g id="dim-v" style="pointer-events: none;">
+          <line id="line-v" stroke="#10b981" stroke-width="2" />
+          <line id="tick-v-start" stroke="#10b981" stroke-width="2" />
+          <line id="tick-v-end" stroke="#10b981" stroke-width="2" />
+          <text id="text-v" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle"></text>
+          <line id="ext-v-start" stroke="#10b981" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" />
+          <line id="ext-v-end" stroke="#10b981" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" />
+        </g>
+      </svg>
+      <div class="bench-line"></div>
+      <div id="lens-el" class="component" style="left: 50%;">
+        <span class="absolute top-[-110px] font-bold text-blue-600 text-sm">MIRROR</span>
+        <span class="absolute top-2 text-xs font-bold text-blue-600">P</span>
+      </div>
+      <!-- Points for Mirror: F is to left, C (2F) is to left -->
+      <div id="f1" class="focal-point"><span class="focal-label">F</span></div>
+      <div id="c1" class="focal-point two-f-point"><span class="focal-label">C</span></div>
+
+      <div id="obj-pin" class="component pin-obj">
+        <div class="pin-base" id="drag-obj"></div><span class="pin-label">Object<br>વસ્તુ</span>
+        <!-- HTML Arrow Elements -->
+        <div id="obj-arrow-stem" class="css-arrow-stem bg-red-500"></div>
+        <div id="obj-arrow-head" class="css-arrow-head border-b-red-500"></div>
+      </div>
+      <div id="img-pin" class="component pin-img" style="display:none;">
+        <div class="pin-base"></div><span class="pin-label">Image<br>પ્રતિબિંબ</span>
+        <!-- HTML Arrow Elements -->
+        <div id="img-arrow-stem" class="css-arrow-stem bg-emerald-500"></div>
+        <div id="img-arrow-head" class="css-arrow-head"></div>
+      </div>
+    </div>
+
+    <!-- OBSERVATION TABLE -->
+    <div class="workspace-container bg-white p-4 rounded-xl shadow-md mb-6 max-w-[1000px] mx-auto w-full obs-section">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold text-gray-700">Observation Table (અવલોકન કોઠો)</h2>
+        <div class="flex gap-2">
+          <button onclick="resetTable()"
+            class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Clear Table</button>
+          <button onclick="recordReading()"
+            class="px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 shadow-sm">Record
+            Reading</button>
+        </div>
+      </div>
+      <div class="obs-table-wrapper">
+        <table class="obs-table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Mirror Pos <span class="text-blue-600">M</span> (cm)</th>
+              <th>Obj Pin <span class="text-red-600">O</span> (cm)</th>
+              <th>Img Pin <span class="text-green-600">I</span> (cm)</th>
+              <th>Obj Dist <span class="text-red-600">u</span> (cm)</th>
+              <th>Img Dist <span class="text-green-600">v</span> (cm)</th>
+              <th>Focal Length <span class="text-blue-600">f</span> (cm)<span class="guj-sub">uv / (u + v)</span></th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+          <tfoot>
+            <tr class="bg-blue-50 font-bold border-t-2 border-blue-200">
+              <td colspan="6" class="text-right pr-4 text-blue-800">Average f (સરેરાશ f):</td>
+              <td id="avg-f-cell" class="text-blue-800">--</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="workspace-container flex justify-center gap-4 mb-12 btn-row">
+      <button id="download-btn" onclick="downloadPDF()"
+        class="px-4 py-2 bg-gray-700 text-white font-semibold rounded hover:bg-gray-800 shadow-sm">Download
+        Report</button>
+    </div>
+  </div>
+
+  <script>
+    let SCALE = 4;
+    let objectHeight = 80;
+    const dom = {
+      svg: document.getElementById('svg-canvas'),
+      shape: document.getElementById('shape-lens'),
+      hatch: document.getElementById('mirror-hatch'),
+      obj: document.getElementById('obj-pin'),
+      img: document.getElementById('img-pin'),
+      dragObj: document.getElementById('drag-obj'),
+      inputF: document.getElementById('input-f'),
+      inputU: document.getElementById('input-u'),
+      inputLens: document.getElementById('input-lens-pos'),
+      valV: document.getElementById('val-v'),
+      posObj: document.getElementById('pos-obj'),
+      posLens: document.getElementById('pos-lens'),
+      posImg: document.getElementById('pos-img'),
+      showRays: document.getElementById('toggle-rays'),
+      rays: {
+        r1: document.getElementById('ray1'),
+        r2: document.getElementById('ray2'),
+        r3: document.getElementById('ray3'),
+        r1v: document.getElementById('ray1-virt'),
+        r2v: document.getElementById('ray2-virt'),
+        r3v: document.getElementById('ray3-virt')
+      },
+      // HTML Arrow Elements
+      objStem: document.getElementById('obj-arrow-stem'),
+      objHead: document.getElementById('obj-arrow-head'),
+      imgStem: document.getElementById('img-arrow-stem'),
+      imgHead: document.getElementById('img-arrow-head')
+    };
+
+    let dragTarget = null; let dragStartX = 0; let initialLensOffset = 0; let lensOffset = 0;
+    const lensEl = document.getElementById('lens-el');
+
+    dom.dragObj.addEventListener('mousedown', (e) => { dragTarget = 'obj'; e.preventDefault(); isDrag = true; });
+    dom.dragObj.addEventListener('touchstart', (e) => { dragTarget = 'obj'; isDrag = true; });
+
+    function updateZoom() {
+      const slider = document.getElementById('zoom-slider');
+      SCALE = parseFloat(slider.value);
+      document.getElementById('zoom-val').textContent = SCALE.toFixed(1) + "x";
+      drawRuler();
+      updateSim();
+    }
+    function updateHeight() {
+      const slider = document.getElementById('height-slider');
+      objectHeight = parseInt(slider.value);
+      updateSim();
+    }
+    function drawRuler() {
+      const r = dom.svg.getBoundingClientRect();
+      const cy = r.height / 2;
+      const cx = (r.width / 2) + lensOffset;
+      const ex = dom.svg.querySelector('.ruler-group');
+      if (ex) ex.remove();
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.setAttribute("class", "ruler-group");
+      g.style.opacity = "0.5";
+      let majorStep = 10;
+      if (SCALE >= 4.5) { majorStep = 5; }
+      const currentL = parseFloat(dom.inputLens.value) || 50;
+      const startD = Math.floor((0 - cx) / SCALE);
+      const endD = Math.ceil((r.width - cx) / SCALE);
+      for (let d = startD; d <= endD; d++) {
+        const x = cx + (d * SCALE);
+        const isMajor = (d % majorStep === 0);
+        const isMid = (d % 1 === 0);
+        const valToDisplay = d + currentL;
+        if (isMajor) { drawTick(g, x, cy, valToDisplay, 14, true); }
+        else if (isMid) { const isHalf = (majorStep === 10 && d % 5 === 0); const h = isHalf ? 10 : 6; drawTick(g, x, cy, valToDisplay, h, false); }
+      }
+      dom.svg.insertBefore(g, dom.svg.firstChild);
+    }
+    function drawTick(g, x, cy, val, h, showText) {
+      const l = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      l.setAttribute("x1", x); l.setAttribute("y1", cy);
+      l.setAttribute("x2", x); l.setAttribute("y2", cy + h);
+      l.setAttribute("stroke", "#374151");
+      g.appendChild(l);
+      if (showText) {
+        const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t.setAttribute("x", x); t.setAttribute("y", cy + 28);
+        t.setAttribute("text-anchor", "middle");
+        t.setAttribute("class", "ruler-text");
+        t.textContent = val;
+        g.appendChild(t);
+      }
+    }
+    function clearPresets() { document.querySelectorAll('.preset-btn').forEach(btn => { btn.classList.remove('active-preset-btn'); }); }
+    function setPreset(type, btn) {
+      clearPresets(); if (btn) btn.classList.add('active-preset-btn');
+      const f = parseFloat(dom.inputF.value) || 15;
+      let u = -30;
+      switch (type) {
+        case 'infinity': u = -80; break;
+        case 'beyond-c': u = -(2 * f + 10); break;
+        case 'at-c': u = -(2 * f); break;
+        case 'between-f-c': u = -(1.5 * f); break;
+        case 'at-f': u = -f; break;
+        case 'between-f-p': u = -(0.5 * f); break;
+      }
+      if (u < -80) u = -80; if (u > -5) u = -5;
+      dom.inputU.value = u.toFixed(1);
+      updateSim();
+    }
+    function updatePresetDisplay() { renderTable(); }
+    function updateLensPos() {
+      const val = parseFloat(dom.inputLens.value);
+      if (!isNaN(val)) {
+        updateSim();
+      }
+    }
+    function updateSim() {
+      const r = dom.svg.getBoundingClientRect();
+      const cx = (r.width / 2) + lensOffset;
+      const cy = r.height / 2;
+      const f_mag = parseFloat(dom.inputF.value) || 15;
+      const f = -f_mag; // Concave Mirror has negative focal length
+      let rawU = parseFloat(dom.inputU.value);
+      if (rawU > 0) { rawU = -rawU; dom.inputU.value = rawU; }
+      let u = !isNaN(rawU) ? rawU : -30;
+      if (u > -5) u = -5; if (u < -80) u = -80;
+
+      // Draw Concave Mirror (Curve)
+      const curveDepth = 20;
+      const mirrorH = 100;
+      // Start X: cx - depth (Left side), Control X: cx + depth (Right side), End X: cx - depth
+      // Midpoint (Pole) will be at ~ cx
+      const mPath = `M ${cx - 15},${cy - mirrorH} Q ${cx + 15},${cy} ${cx - 15},${cy + mirrorH}`;
+      dom.shape.setAttribute("d", mPath);
+
+      // Draw Hatching lines
+      dom.hatch.innerHTML = '';
+      for (let y = -mirrorH; y <= mirrorH; y += 10) {
+        // Approx x on curve is convex side (right)
+        // Draw little lines sticking out rightwards
+        // Curve is effectively x = (y^2)/something + cx - ...
+        // Just draw vertical-ish lines on right side relative to rim
+        // Rim is at cx-15. Pole is at cx.
+        // Hatching is on convex side (right)
+        // Let's approximate curve X
+        const t = (y + mirrorH) / (2 * mirrorH);
+        // Quadratic bezier x(t) = (1-t)^2 P0x + 2(1-t)t P1x + t^2 P2x
+        const xAtY = (1 - t) * (1 - t) * (cx - 15) + 2 * (1 - t) * t * (cx + 15) + t * t * (cx - 15);
+
+        const hLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        hLine.setAttribute("x1", xAtY);
+        hLine.setAttribute("y1", cy + y);
+        hLine.setAttribute("x2", xAtY + 8);
+        hLine.setAttribute("y2", cy + y + 5);
+        dom.hatch.appendChild(hLine);
+      }
+
+      const fPx = Math.abs(f) * SCALE; const twofPx = Math.abs(f) * 2 * SCALE;
+      // Points on left side for concave mirror
+      document.getElementById('f1').style.left = (cx - fPx) + 'px';
+      document.getElementById('c1').style.left = (cx - twofPx) + 'px';
+
+      document.getElementById('lens-el').style.left = cx + 'px'; // P is vertex (approx)
+
+      const objX = cx + (u * SCALE);
+      dom.obj.style.left = objX + 'px';
+
+      const oh = objectHeight;
+      // -- DRAW OBJECT ARROW (HTML) --
+      dom.objStem.style.height = oh + 'px';
+      dom.objHead.style.bottom = oh + 'px';
+      const objLabel = dom.obj.querySelector('.pin-label');
+      objLabel.style.bottom = (oh + 25) + 'px';
+
+      // Mirror Formula: 1/v + 1/u = 1/f  => 1/v = 1/f - 1/u => v = (u*f) / (u - f)
+      let v = (u * f) / (u - f);
+      const isReal = (v < 0); // For mirror: v < 0 is Real (in front), v > 0 is Virtual (behind)
+
+      dom.valV.textContent = isFinite(v) ? v.toFixed(2) : "∞";
+      let mVal = 0; let typeText = ""; let typeClass = "";
+
+      // Infinite Logic
+      if (Math.abs(u - f) < 0.1) { v = Infinity; }
+
+      if (!isFinite(v)) { typeText = "At Infinity (અનંત અંતરે)"; mVal = "∞"; typeClass = "text-gray-600"; }
+      else if (isReal) { typeText = "Real & Inverted (વાસ્તવિક અને ઉલટું)"; mVal = (-v / u).toFixed(2); typeClass = "text-green-600"; }
+      else { typeText = "Virtual & Erect (આભાસી અને ચત્તું)"; mVal = (-v / u).toFixed(2); typeClass = "text-indigo-600"; }
+      document.getElementById('img-type').textContent = typeText;
+      document.getElementById('img-type').className = "font-bold text-lg " + typeClass;
+      document.getElementById('mag-val').textContent = isFinite(v) ? (-v / u).toFixed(2) : "∞";
+
+      const vPx_val = v * SCALE, imgX = cx + vPx_val;
+      const m = -v / u;
+      const hImg = Math.abs(oh * m);
+      const displayHImg = Math.min(hImg, 300); // Cap visual height
+
+      dom.img.style.display = isFinite(v) ? 'flex' : 'none';
+      dom.img.style.left = imgX + 'px';
+
+      const imgLabel = dom.img.querySelector('.pin-label');
+
+      if (isFinite(v)) {
+        dom.imgStem.style.height = displayHImg + 'px';
+        if (isReal) {
+          // Real (Inverted)
+          dom.imgStem.style.bottom = 'auto'; dom.imgStem.style.top = '0';
+          dom.imgHead.style.bottom = 'auto'; dom.imgHead.style.top = displayHImg + 'px';
+          dom.imgHead.style.borderTop = '15px solid #10b981'; dom.imgHead.style.borderBottom = 'none';
+          imgLabel.style.top = (displayHImg + 25) + 'px'; imgLabel.style.bottom = 'auto';
+        } else {
+          // Virtual (Erect)
+          dom.imgStem.style.bottom = '0'; dom.imgStem.style.top = 'auto';
+          dom.imgHead.style.bottom = displayHImg + 'px'; dom.imgHead.style.top = 'auto';
+          dom.imgHead.style.borderBottom = '15px solid #10b981'; dom.imgHead.style.borderTop = 'none';
+          imgLabel.style.bottom = (displayHImg + 25) + 'px'; imgLabel.style.top = 'auto';
+        }
+      }
+
+      const currentLensPos = parseFloat(dom.inputLens.value) || 50;
+      dom.posLens.textContent = currentLensPos.toFixed(1) + " cm";
+      dom.posObj.textContent = (currentLensPos + u).toFixed(1) + " cm";
+      dom.posImg.textContent = (currentLensPos + v).toFixed(1) + " cm";
+
+      // Update Dimensions Arrows
+      const yU = cy + 220;
+      const lineU = document.getElementById('line-u'); const tickUStart = document.getElementById('tick-u-start'); const tickUEnd = document.getElementById('tick-u-end'); const textU = document.getElementById('text-u'); const extUStart = document.getElementById('ext-u-start'); const extUEnd = document.getElementById('ext-u-end');
+      lineU.setAttribute('x1', cx); lineU.setAttribute('y1', yU); lineU.setAttribute('x2', objX); lineU.setAttribute('y2', yU);
+      tickUStart.setAttribute('x1', cx); tickUStart.setAttribute('y1', yU - 5); tickUStart.setAttribute('x2', cx); tickUStart.setAttribute('y2', yU + 5);
+      tickUEnd.setAttribute('x1', objX); tickUEnd.setAttribute('y1', yU - 5); tickUEnd.setAttribute('x2', objX); tickUEnd.setAttribute('y2', yU + 5);
+      textU.textContent = `u = ${u.toFixed(1)} cm`; textU.setAttribute('x', (cx + objX) / 2); textU.setAttribute('y', yU - 8);
+      extUStart.setAttribute('x1', cx); extUStart.setAttribute('y1', cy); extUStart.setAttribute('x2', cx); extUStart.setAttribute('y2', yU);
+      extUEnd.setAttribute('x1', objX); extUEnd.setAttribute('y1', cy); extUEnd.setAttribute('x2', objX); extUEnd.setAttribute('y2', yU);
+
+      const yV = cy + 250;
+      const lineV = document.getElementById('line-v'); const tickVStart = document.getElementById('tick-v-start'); const tickVEnd = document.getElementById('tick-v-end'); const textV = document.getElementById('text-v'); const extVStart = document.getElementById('ext-v-start'); const extVEnd = document.getElementById('ext-v-end');
+      if (isFinite(v)) {
+        lineV.setAttribute('display', 'block'); tickVStart.setAttribute('display', 'block'); tickVEnd.setAttribute('display', 'block'); textV.setAttribute('display', 'block'); extVStart.setAttribute('display', 'block'); extVEnd.setAttribute('display', 'block');
+        lineV.setAttribute('x1', cx); lineV.setAttribute('y1', yV); lineV.setAttribute('x2', imgX); lineV.setAttribute('y2', yV);
+        tickVStart.setAttribute('x1', cx); tickVStart.setAttribute('y1', yV - 5); tickVStart.setAttribute('x2', cx); tickVStart.setAttribute('y2', yV + 5);
+        tickVEnd.setAttribute('x1', imgX); tickVEnd.setAttribute('y1', yV - 5); tickVEnd.setAttribute('x2', imgX); tickVEnd.setAttribute('y2', yV + 5);
+        textV.textContent = `v = ${v.toFixed(1)} cm`; textV.setAttribute('x', (cx + imgX) / 2); textV.setAttribute('y', yV - 8);
+        extVStart.setAttribute('x1', cx); extVStart.setAttribute('y1', cy); extVStart.setAttribute('x2', cx); extVStart.setAttribute('y2', yV);
+        extVEnd.setAttribute('x1', imgX); extVEnd.setAttribute('y1', cy); extVEnd.setAttribute('x2', imgX); extVEnd.setAttribute('y2', yV);
+      } else {
+        lineV.setAttribute('display', 'none');
+        // ... hide others
+      }
+
+      // RAY TRACING
+      if (dom.showRays.checked && isFinite(v)) {
+        const ox = objX, oy = cy - oh;
+        const iy = (v < 0) ? (cy + displayHImg) : (cy - displayHImg); // Real is down
+
+        // Ray 1: Parallel to Axis -> Reflects through F
+        drawRay('r1', [[ox, oy], [cx, oy], [cx - fPx, cy]]);
+        // Extend Reflected ray 1 to Image
+        // If real: F is between Mirror and Image or Image is beyond F.
+        // Ray goes from Mirror(cx,oy) thru F(cx-fPx, cy) to Image(imgX, iy)
+        // Draw main reflection line
+        if (isReal) {
+          // Real image: Mirror -> F -> Image
+          // But image might be further left than F.
+          drawRay('r1', [[ox, oy], [cx, oy], [imgX, iy]]);
+          // Virtual ray behind? No
+          dom.rays.r1v.setAttribute('d', '');
+        } else {
+          // Virtual image: Mirror -> F (Physical ray goes left).
+          // Virtual extension goes right to Image.
+          // Physical Ray: Starts at Mirror, goes thru F. 
+          // We draw line from Mirror to "far left thru F"
+          const slope = (cy - oy) / ((cx - fPx) - cx); // dy/dx
+          const farX = cx - 1000;
+          const farY = oy + slope * (farX - cx);
+          // Actually, Ray 1 is parallel to axis coming in. Reflected passes through F.
+          // So line is from (cx, oy) to F(cx-fPx, cy).
+          // Extend to left edge of screen
+          const slopeRef = (cy - oy) / ((cx - fPx) - cx);
+          const xEnd = -500;
+          const yEnd = oy + slopeRef * (xEnd - cx);
+          drawRay('r1', [[ox, oy], [cx, oy], [xEnd, yEnd]]);
+
+          // Virtual extension: Mirror to Image
+          drawRay('r1v', [[cx, oy], [imgX, iy]]);
+        }
+
+        // Ray 2: Through Center of Curvature (C) -> Reflects back
+        // C is at cx - 2*fPx
+        // Line from Object Top to C
+        const cX = cx - 2 * Math.abs(f) * SCALE;
+        if (isReal) {
+          drawRay('r2', [[ox, oy], [imgX, iy]]); // Simply connects tip to tip for sim
+        } else {
+          // Virtual
+          // Physical: Object -> Mirror (along line from C) -> Reflects back to C
+          // Just draw line from C through Object to Mirror
+          // And virtual extension to Image
+          drawRay('r2', [[ox, oy], [cx, (oy + (iy - oy) * (cx - ox) / (imgX - ox))]]); // Hit mirror
+          drawRay('r2v', [[cx, (oy + (iy - oy) * (cx - ox) / (imgX - ox))], [imgX, iy]]);
+        }
+
+        // Ray 3: To Pole (P) -> Reflects symmetrically
+        drawRay('r3', [[ox, oy], [cx, cy], [imgX, iy]]); // Works for both, V-shape
+        if (!isReal) {
+          // For virtual, the "real" reflected ray goes down-left
+          const slope = (iy - cy) / (imgX - cx); // slope of virtual ray
+          const xEnd = -500;
+          const yEnd = cy + slope * (xEnd - cx);
+          drawRay('r3', [[ox, oy], [cx, cy], [xEnd, yEnd]]);
+          drawRay('r3v', [[cx, cy], [imgX, iy]]);
+        } else {
+          dom.rays.r3v.setAttribute('d', '');
+        }
+
+        let foundMatch = false; const epsilon = 0.5;
+        const checkPreset = (target, id) => { if (!foundMatch && Math.abs(u - target) < epsilon) { document.getElementById(id).classList.add('active-preset-btn'); foundMatch = true; } else { document.getElementById(id).classList.remove('active-preset-btn'); } };
+        checkPreset(-80, 'btn-infinity'); checkPreset(-(2 * Math.abs(f) + 10), 'btn-beyond-c'); checkPreset(-(2 * Math.abs(f)), 'btn-at-c'); checkPreset(-(1.5 * Math.abs(f)), 'btn-between-f-c'); checkPreset(-Math.abs(f), 'btn-at-f'); checkPreset(-(0.5 * Math.abs(f)), 'btn-between-f-p');
+      } else { Object.values(dom.rays).forEach(r => r.setAttribute('d', '')); }
+      const toggleParent = dom.showRays.closest('.group');
+      if (toggleParent) {
+        if (dom.showRays.checked) toggleParent.parentElement.classList.add('active-ray-btn');
+        else toggleParent.parentElement.classList.remove('active-ray-btn');
+      }
+      drawRuler();
+    }
+    function drawRay(id, pts) { if (pts.length < 2) { dom.rays[id].setAttribute('d', ''); return; } const d = `M ${pts[0][0]},${pts[0][1]} ` + pts.slice(1).map(p => `L ${p[0]},${p[1]}`).join(' '); dom.rays[id].setAttribute('d', d); }
+    function toggleMobileMenu() { const menu = document.getElementById('mobile-menu'); menu.classList.toggle('hidden'); }
+    function toggleMobSub(id) { const sub = document.getElementById(id); if (sub.style.display === 'block') sub.style.display = 'none'; else sub.style.display = 'block'; }
+
+    // TOAST NOTIFICATION SYSTEM
+    function showToast(msg, type = 'error') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type === 'error' ? 'toast-error' : 'toast-success'}`;
+      const icon = type === 'error' ? '<svg class="w-6 h-6 toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' : '<svg class="w-6 h-6 toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+      let btnHtml = '';
+      if (type === 'error') { btnHtml = `<button class="toast-btn" onclick="this.parentElement.classList.remove('show'); setTimeout(() => this.parentElement.remove(), 300);">OK</button>`; }
+      toast.innerHTML = `${icon}<div class="toast-content"><p class="toast-title">${type === 'error' ? 'Observation Rejected' : 'Success'}</p><p class="toast-msg">${msg}</p></div>${btnHtml}`;
+      container.appendChild(toast);
+      void toast.offsetWidth;
+      toast.classList.add('show');
+      if (type !== 'error') { setTimeout(() => { if (toast.parentElement) { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); } }, 3000); }
+    }
+
+    let tableData = [null, null, null, null, null];
+    function recordReading() {
+      const f = parseFloat(dom.inputF.value); const u = Math.abs(parseFloat(dom.inputU.value));
+      // For Concave Mirror, Virtual image forms when u < f. Real images form when u > f.
+      // Allow both, but warn maybe? Standard lab usually focuses on real images.
+      const isDuplicate = tableData.some(data => { if (!data) return false; return Math.abs(parseFloat(data.u) - parseFloat(dom.inputU.value)) < 0.1; });
+      if (isDuplicate) { showToast("Reading already recorded for this position!<br><span class='text-xs mt-1 block'>આ રીડિંગ પહેલાથી જ કોઠામાં છે.</span>", 'error'); return; }
+
+      const C = 2 * f; let targetIndices = [];
+      // Logic for sorting into table buckets (Infinity, Beyond C, At C, Between F&C, At F)
+      if (u > C + 2) { targetIndices = [0, 1]; } // Beyond C
+      else if (Math.abs(u - C) <= 2) { targetIndices = [2]; } // At C
+      else if (u > f + 1) { targetIndices = [3, 4]; } // Between F and C
+      else { targetIndices = [4]; } // Near F (or virtual)
+
+      let bucketData = []; targetIndices.forEach(idx => { if (tableData[idx] !== null) bucketData.push(tableData[idx]); });
+
+      const currentL = parseFloat(dom.inputLens.value) || 50;
+      const uVal = parseFloat(dom.inputU.value);
+      // Calc v
+      let vVal = (uVal * (-f)) / (uVal - (-f));
+
+      const lensPos = currentL.toFixed(1);
+      const objPos = (currentL + uVal).toFixed(1);
+      const imgPos = isFinite(vVal) ? (currentL + vVal).toFixed(1) : "∞";
+
+      let fCalc = "-";
+      if (isFinite(vVal)) {
+        // f = uv / (u+v)
+        fCalc = ((uVal * vVal) / (uVal + vVal)).toFixed(2);
+      }
+
+      const newReading = { no: 0, lensPos: lensPos, objPos: objPos, imgPos: imgPos, u: uVal.toFixed(1), v: isFinite(vVal) ? vVal.toFixed(1) : "∞", f: Math.abs(fCalc).toFixed(2), absU: Math.abs(uVal) };
+      bucketData.push(newReading); bucketData.sort((a, b) => b.absU - a.absU); // Sort descending u (far to near)
+
+      if (bucketData.length > targetIndices.length) { showToast("Table section full! Please clear existing readings in this range.", 'error'); return; }
+      for (let i = 0; i < bucketData.length; i++) { tableData[targetIndices[i]] = bucketData[i]; }
+      renderTable();
+      showToast("Reading recorded successfully!", 'success');
+    }
+    function resetTable() { tableData = [null, null, null, null, null]; renderTable(); }
+    function renderTable() {
+      const tbody = document.getElementById('table-body'); tbody.innerHTML = "";
+      const f = parseFloat(dom.inputF.value) || 15; const C = 2 * f;
+      const labels = [
+        { text: `Beyond C (${(C + 5).toFixed(1)} cm)`, sub: `> 2f` },
+        { text: `Beyond C (${(C + 2).toFixed(1)} cm)`, sub: `> 2f` },
+        { text: `At C (${C.toFixed(1)} cm)`, sub: `2f` },
+        { text: `Between F & C (${(C - 2).toFixed(1)} cm)`, sub: `< 2f` },
+        { text: `Between F & C (${(C - 5).toFixed(1)} cm)`, sub: `< 2f` }
+      ];
+      let fSum = 0; let fCount = 0;
+      for (let i = 0; i < 5; i++) {
+        const row = document.createElement('tr'); const data = tableData[i];
+        let html = `<td class="text-left pl-4 border-r border-gray-100 bg-gray-50"><span class="font-semibold text-gray-700 block">${labels[i].text}</span><span class="text-xs text-gray-500">${labels[i].sub}</span></td>`;
+        if (data) { html += `<td>${data.lensPos}</td><td>${data.objPos}</td><td>${data.imgPos}</td><td class="text-red-600 font-medium">${data.u}</td><td class="text-green-600 font-medium">${data.v}</td><td class="text-blue-700 font-bold">${data.f}</td>`; if (data.f !== "-" && !isNaN(parseFloat(data.f))) { fSum += parseFloat(data.f); fCount++; } } else { html += `<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>`; }
+        row.innerHTML = html; tbody.appendChild(row);
+      }
+      const avgF = fCount > 0 ? (fSum / fCount).toFixed(2) : "--"; document.getElementById('avg-f-cell').textContent = avgF;
+    }
+    renderTable();
+    let isDrag = false;
+    function handleDrag(e) {
+      if (!isDrag) return;
+      const r = dom.svg.getBoundingClientRect();
+      const clientX = e.clientX || e.touches[0].clientX;
+      const x = clientX - r.left;
+      if (dragTarget === 'lens') {
+        const dx = clientX - dragStartX; lensOffset = initialLensOffset + dx;
+        if (lensOffset > 300) lensOffset = 300; if (lensOffset < -300) lensOffset = -300;
+        updateSim();
+      } else if (dragTarget === 'obj') {
+        const cx = (r.width / 2) + lensOffset; let uNew = (x - cx) / SCALE;
+        if (uNew > -5) uNew = -5; if (uNew < -80) uNew = -80;
+        dom.inputU.value = uNew.toFixed(1);
+        updateSim();
+      }
+    }
+    window.addEventListener('mousemove', handleDrag); window.addEventListener('touchmove', handleDrag); window.addEventListener('mouseup', () => { isDrag = false; dragTarget = null; }); window.addEventListener('touchend', () => { isDrag = false; dragTarget = null; });
+    window.addEventListener('resize', () => { drawRuler(); updateSim(); });
+
+    // PDF Generation Logic
+    function downloadPDF() {
+      // Set current date in header
+      const dateSpan = document.getElementById('pdf-date');
+      if (dateSpan) {
+        const now = new Date();
+        dateSpan.textContent = now.toLocaleDateString();
+      }
+
+      document.body.classList.add('pdf-mode');
+
+      const element = document.querySelector('.main-content');
+      const opt = {
+        margin: 0.5,
+        filename: 'Concave_Mirror_Report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, scrollY: 0, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        document.body.classList.remove('pdf-mode');
+      });
+    }
+
+    drawRuler(); updateSim();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics Practicals - NexInnovation</title>
+
+  <!-- PRIMARY SEO -->
+  <title>Physics Practicals & Virtual Labs - NexInnovation</title>
+  <meta name="description" content="Free online Physics simulators for Class 11 and 12 Science. Perform virtual experiments for Optics, Electronics, and Mechanics directly in your browser.">
+  <meta name="keywords" content="Physics Practicals, Virtual Lab, Class 12 Physics, NCERT Science Experiments, NexInnovation Labs, Gujarat Board Physics">
+  
+  <!-- ROBOTS -->
+  <meta name="robots" content="index, follow">
+  
+  <!-- SOCIAL MEDIA / WHATSAPP PREVIEW -->
+  <meta property="og:title" content="Physics Practicals & Virtual Labs">
+  <meta property="og:description" content="Perform Class 11/12 Physics experiments online. Interactive simulators for Lenses, Mirrors, and more.">
+  <meta property="og:url" content="https://nexinnovation.in/practicals/">
+  <meta property="og:type" content="website">
+  
+  <!-- Tailwind & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Google Font Import handled in HTML head for performance */
+
+    /* Smooth Scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      /* Matches slate-50 */
+      padding: 0;
+      margin: 0;
+      color: #1e293b;
+      /* slate-800 */
+    }
+
+    /* --- NAVIGATION BAR (Matched to User Snippet) --- */
+    nav {
+      height: 80px;
+      background-color: #1f2937;
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      z-index: 60;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: block;
+    }
+
+    nav{
+      transition: background-color 0.3s ease;
+    }
+
+    nav.nav-transparent {
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+    .nav-container {
+      max-width: auto;
+      margin: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media (min-width: 768px) {
+      .nav-container {
+        margin: 0 50px;
+        /* Specific margin requested */
+      }
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #60a5fa;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* --- NAV LINKS (Styled like .nav-trigger) --- */
+    .nav-link-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background-color 0.2s;
+      color: #e5e7eb;
+      /* Light Grey Text */
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .nav-link-btn:hover {
+      background-color: #374151;
+      /* Darker Grey Hover */
+      color: white;
+    }
+
+    /* --- MOBILE MENU --- */
+    .mobile-menu-btn {
+      display: block;
+      color: white;
+    }
+
+    .desktop-menu {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+
+      /* Match 768px breakpoint from snippet */
+      .mobile-menu-btn {
+        display: none;
+      }
+
+      .desktop-menu {
+        display: flex;
+        gap: 10px;
+      }
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    .animate-fade-in-up {
+      opacity: 0;
+      /* Initially hidden */
+      animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    /* Card Hover Effects */
+    .card-hover-effect {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-hover-effect:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Section Internal Watermark */
+    .section-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-10deg);
+      font-size: 8rem;
+      font-weight: 900;
+      color: white;
+      opacity: 0.03;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* --- NEXINNOVATION TOOLTIP --- */
+    .nex-tooltip {
+      position: relative;
+    }
+
+    /* Default Tooltip Body (Appears Top) */
+    .nex-tooltip::after {
+      content: "Visit nexinnovation.in ↗";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background-color: #0f172a;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      pointer-events: none;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Default Tooltip Arrow (Points Down) */
+    .nex-tooltip::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      border-width: 5px;
+      border-style: solid;
+      border-color: #0f172a transparent transparent transparent;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 100;
+    }
+
+    /* Default Hover State */
+    .nex-tooltip:not(.nex-tooltip-bottom):hover::after,
+    .nex-tooltip:not(.nex-tooltip-bottom):hover::before {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-5px);
+    }
+
+    /* --- BOTTOM TOOLTIP VARIANT (For Navbar) --- */
+    .nex-tooltip-bottom::after {
+      bottom: auto;
+      top: 100%;
+      /* Place below */
+      transform: translateX(-50%) translateY(-10px);
+      /* Start slightly higher */
+    }
+
+    .nex-tooltip-bottom::before {
+      bottom: auto;
+      top: 100%;
+      /* Arrow Points Up */
+      border-color: transparent transparent #0f172a transparent;
+      transform: translateX(-50%) translateY(-10px);
+    }
+
+    /* Bottom Hover State */
+    .nex-tooltip-bottom:hover::after,
+    .nex-tooltip-bottom:hover::before {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(5px);
+      /* Move down into view */
+    }
+  </style>
+</head>
+
+
+<body class="font-inter bg-slate-50 text-slate-800 antialiased relative select-none selection:bg-blue-100 selection:text-blue-900">
+
+  <!-- Navbar -->
+  <nav id="main-nav">
+    <div class="nav-container">
+
+      <!-- Logo with Tooltip -->
+      <a href="https://nexinnovation.in" class="nav-logo group nex-tooltip nex-tooltip-bottom">
+        <img src="https://lh3.googleusercontent.com/p/AF1QipPcc7Jz7odcsxtYOP45v-RxdOVUWzssW9qpskAW=s680-w680-h510-rw"
+          alt="NexInnovation"
+          class="h-10 w-10 rounded-sm object-contain bg-white shadow-sm group-hover:scale-105 transition-transform" />
+        <div class="flex flex-col ml-3">
+          <span class="font-bold leading-tight">NexInnovation</span>
+          <span class="text-[10px] text-gray-400 uppercase tracking-wider">Physics Labs</span>
+        </div>
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="mobile-menu-btn focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <!-- Desktop Menu (Visual match to Practical Page, but logic is scrolling) -->
+      <div class="desktop-menu">
+        <a href="#class-12" class="nav-link-btn">
+          12 Science
+          <!-- <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg> -->
+        </a>
+
+        <a href="#class-11" class="nav-link-btn">
+          11 Science
+          <!-- <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg> -->
+        </a>
+
+        <!-- Main Site Button -->
+        <a href="https://nexinnovation.in"
+          class="nex-tooltip nex-tooltip-bottom bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors shadow-lg shadow-blue-500/30 no-underline ml-4">
+          Main Site
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+      class="hidden md:hidden bg-gray-800 border-t border-gray-700 absolute w-full left-0 top-full shadow-xl">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="#class-12"
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">12
+          Science</a>
+        <a href="#class-11"
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">11
+          Science</a>
+        <a href="https://nexinnovation.in"
+          class="block px-3 py-2 rounded-md text-base font-medium text-blue-400 hover:text-blue-300 hover:bg-gray-700">Main
+          Site</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-slate-900"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-900/50 to-purple-900/50"></div>
+      <!-- Grid Pattern -->
+      <div class="absolute inset-0"
+        style="background-image: radial-gradient(#3b82f6 1px, transparent 1px); background-size: 40px 40px; opacity: 0.1;">
+      </div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+      <!-- Big Logo for Promotion -->
+      <div class="mb-8 animate-fade-in-up flex justify-center">
+        <div class="relative group cursor-pointer">
+          <div
+            class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200">
+          </div>
+          <!-- CHANGED: Switched div to 'a' tag and added nex-tooltip class -->
+          <a href="https://nexinnovation.in"
+            class="relative bg-white rounded-xl p-4 ring-1 ring-gray-900/5 shadow-2xl nex-tooltip block">
+            <img
+              src="https://lh3.googleusercontent.com/p/AF1QipPcc7Jz7odcsxtYOP45v-RxdOVUWzssW9qpskAW=s680-w680-h510-rw"
+              alt="NexInnovation Logo" class="h-24 w-24 object-contain md:h-32 md:w-32">
+          </a>
+        </div>
+      </div>
+
+      <span
+        class="inline-block py-1 px-3 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs font-semibold tracking-wide uppercase mb-6 animate-fade-in-up"
+        style="animation-delay: 0.1s;">
+        Powered by NexInnovation
+      </span>
+      <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-6 animate-fade-in-up"
+        style="animation-delay: 0.2s;">
+        Master Physics via <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Simulation</span>
+      </h1>
+      <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-300 mb-10 animate-fade-in-up" style="animation-delay: 0.3s;">
+        Interactive virtual labs for 11th and 12th Science brought to you by <strong>NexInnovation</strong>. Visualize
+        concepts, perform experiments, and analyze data in real-time.
+      </p>
+      <div class="flex justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.4s;">
+        <a href="#class-12"
+          class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-1">
+          Start Experimenting
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Practicals Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
+
+    <!-- Class 12 Section -->
+    <section id="class-12" class="scroll-mt-24">
+      <div class="flex items-center gap-4 mb-10">
+        <div class="h-10 w-1 bg-blue-600 rounded-full"></div>
+        <h2 class="text-3xl font-bold text-slate-900">Class 12 Science</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Card 1: Convex Lens -->
+        <a href="optics_simulator_convex_lens.html"
+          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 overflow-hidden hover:-translate-y-1 h-full flex flex-col">
+          <div class="absolute top-0 right-0 p-4">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              Active
+            </span>
+          </div>
+          <div class="p-6 pb-0 flex-1">
+            <div
+              class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Convex Lens
+            </h3>
+            <p class="text-slate-600 text-sm line-clamp-2">Determine the focal length of a convex lens using the u-v
+              method with interactive ray diagrams.</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Optics</span>
+              <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Ray Diagram</span>
+            </div>
+          </div>
+          <div class="p-6 mt-auto">
+            <div
+              class="flex items-center text-blue-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+              Launch Simulator <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                </path>
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 2: Concave Mirror -->
+        <a href="optics_simulator_concave_mirror.html"
+          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 overflow-hidden hover:-translate-y-1 h-full flex flex-col">
+          <div class="absolute top-0 right-0 p-4">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              Active
+            </span>
+          </div>
+          <div class="p-6 pb-0 flex-1">
+            <div
+              class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Convex Lens
+            </h3>
+            <p class="text-slate-600 text-sm line-clamp-2">Determine the focal length of a convex lens using the u-v
+              method with interactive ray diagrams.</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Optics</span>
+              <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Ray Diagram</span>
+            </div>
+          </div>
+          <div class="p-6 mt-auto">
+            <div
+              class="flex items-center text-blue-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+              Launch Simulator <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                </path>
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 3: Logic Gates -->
+        <a href="#"
+          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 overflow-hidden hover:-translate-y-1 h-full flex flex-col opacity-75 grayscale hover:grayscale-0 hover:opacity-100">
+          <div class="absolute top-0 right-0 p-4">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+              Coming Soon
+            </span>
+          </div>
+          <div class="p-6 pb-0 flex-1">
+            <div
+              class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Logic Gates</h3>
+            <p class="text-slate-600 text-sm">Interactive truth table verification for AND, OR, NOT, NAND, and NOR
+              gates.</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Electronics</span>
+              <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Digital</span>
+            </div>
+          </div>
+          <div class="p-6 mt-auto">
+            <div class="flex items-center text-slate-400 font-semibold text-sm">
+              In Development
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Promotional Section for NexInnovation -->
+    <section class="bg-blue-900 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden my-16">
+      <!-- Internal Watermark -->
+      <div class="section-watermark">NEXINNOVATION</div>
+
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10"
+        style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+      <div class="relative z-10">
+        <!-- CHANGED: Wrapped image in 'a' tag with nex-tooltip class -->
+        <a href="https://nexinnovation.in" class="nex-tooltip inline-block mx-auto mb-6">
+          <img src="https://lh3.googleusercontent.com/p/AF1QipPcc7Jz7odcsxtYOP45v-RxdOVUWzssW9qpskAW=s680-w680-h510-rw"
+            alt="NexInnovation Logo" class="h-20 w-20 rounded-xl bg-white p-2 shadow-xl">
+        </a>
+
+        <h2 class="text-3xl font-bold text-white mb-4">Trusted by Schools & Students</h2>
+        <p class="text-blue-100 max-w-2xl mx-auto text-lg mb-8">NexInnovation provides cutting-edge educational tools
+          that bridge the gap between theory and practical application.</p>
+        <a href="https://nexinnovation.in"
+          class="nex-tooltip inline-flex items-center bg-white text-blue-900 font-bold px-6 py-3 rounded-full hover:bg-blue-50 transition-colors">
+          Visit NexInnovation.in
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Class 11 Section -->
+    <section id="class-11" class="scroll-mt-24 border-t border-slate-200 pt-16">
+      <div class="flex items-center gap-4 mb-10">
+        <div class="h-10 w-1 bg-purple-600 rounded-full"></div>
+        <h2 class="text-3xl font-bold text-slate-900">Class 11 Science</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card 1: Vernier Caliper -->
+        <a href="#"
+          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 overflow-hidden hover:-translate-y-1 h-full flex flex-col opacity-75 grayscale hover:grayscale-0 hover:opacity-100">
+          <div class="absolute top-0 right-0 p-4">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+              Coming Soon
+            </span>
+          </div>
+          <div class="p-6 pb-0 flex-1">
+            <div
+              class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4 text-teal-600 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Vernier Caliper</h3>
+            <p class="text-slate-600 text-sm">Measure dimensions of various objects with high precision using a virtual
+              Vernier Caliper.</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Mechanics</span>
+            </div>
+          </div>
+          <div class="p-6 mt-auto">
+            <div class="flex items-center text-slate-400 font-semibold text-sm">
+              In Development
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 2: Screw Gauge -->
+        <a href="#"
+          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 overflow-hidden hover:-translate-y-1 h-full flex flex-col opacity-75 grayscale hover:grayscale-0 hover:opacity-100">
+          <div class="absolute top-0 right-0 p-4">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+              Coming Soon
+            </span>
+          </div>
+          <div class="p-6 pb-0 flex-1">
+            <div
+              class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4 text-teal-600 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                </path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Micrometer Screw</h3>
+            <p class="text-slate-600 text-sm">Learn to read a micrometer screw gauge and measure thin wires or sheets.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">Mechanics</span>
+            </div>
+          </div>
+          <div class="p-6 mt-auto">
+            <div class="flex items-center text-slate-400 font-semibold text-sm">
+              In Development
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <img
+              src="https://lh3.googleusercontent.com/p/AF1QipPcc7Jz7odcsxtYOP45v-RxdOVUWzssW9qpskAW=s680-w680-h510-rw"
+              alt="NexInnovation Logo" class="h-8 w-8 rounded-sm bg-white object-contain">
+            <span class="text-white font-bold text-lg">NexInnovation</span>
+          </div>
+          <p class="text-sm">Empowering students through digital experiential learning tools.</p>
+        </div>
+        <div class="flex justify-start md:justify-end gap-6">
+          <!-- Footer Home Link - Added Tooltip -->
+          <a href="https://nexinnovation.in" class="nex-tooltip hover:text-white transition-colors">Home</a>
+          <a href="#" class="hover:text-white transition-colors">About Us</a>
+          <a href="#" class="hover:text-white transition-colors">Contact</a>
+        </div>
+      </div>
+      <div class="border-t border-slate-800 mt-8 pt-8 text-center text-xs">
+        &copy; 2025 NexInnovation. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>document.addEventListener('DOMContentLoaded', () => {
+      const nav = document.getElementById('main-nav');
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      // Logic: Default is Dark. We remove background ONLY if at top.
+      function handleScroll() {
+        if (window.scrollY < 50) {
+          // At Top: Make transparent (show hero)
+          // BUT only if mobile menu is closed
+          if (mobileMenu && mobileMenu.classList.contains('hidden')) {
+            nav.classList.add('nav-transparent');
+          }
+        } else {
+          // Scrolled Down: Revert to default (Dark)
+          nav.classList.remove('nav-transparent');
+        }
+      }
+
+      // Run on load and scroll
+      handleScroll();
+      window.addEventListener('scroll', handleScroll);
+
+      // Mobile Menu Logic
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+
+          // If menu is open, force dark background immediately
+          if (!mobileMenu.classList.contains('hidden')) {
+            nav.classList.remove('nav-transparent');
+          } else {
+            // If closed, re-check scroll
+            handleScroll();
+          }
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+          });
+        });
+      }
+
+      // Animation Observer
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('section, header .animate-fade-in-up').forEach(el => {
+        observer.observe(el);
+      });
+    });</script>
+</body>
+
+</html>
