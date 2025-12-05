@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Noto+Sans+Gujarati:wght@400;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Gujarati:wght@400;600;700&display=swap"
     rel="stylesheet" />
 
   <style>
@@ -300,10 +300,36 @@
     .nex-tooltip-mail::after {
       content: "Send Email";
     }
+
+    /* --- MAP TOOLTIP VARIANT --- */
+    .nex-tooltip-map::after {
+      content: "Welcome to NexInnovation HQ!";
+    }
+
+    /* Scroll To Top Button */
+    #scroll-top-btn {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #scroll-top-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    #scroll-top-btn.hidden-btn {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+    }
   </style>
 </head>
 
 <body class="font-inter bg-slate-50 text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
+  
+  <!-- Scroll To Top Button -->
+  <button id="scroll-top-btn" class="hidden-btn fixed bottom-8 right-8 z-50 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+  </button>
+
   <!-- Navbar -->
   <nav id="main-nav" class="fixed top-0 w-full z-50 text-white py-4 bg-transparent transition-colors duration-300">
     <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -363,7 +389,7 @@
   <header class="relative pt-36 pb-24 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-900">
     <!-- Background Effects -->
     <div class="absolute inset-0 overflow-hidden">
-      <!-- CHANGED: Gradient flows Blue -> Purple -> Blue -->
+      <!-- Gradient flows Blue -> Purple -> Blue -->
       <div
         class="absolute inset-0 bg-gradient-to-r from-slate-900 via-indigo-900 to-slate-900 animate-gradient-x z-0 opacity-90">
       </div>
@@ -389,14 +415,13 @@
           </div>
           <a href="https://nexinnovation.in"
             class="relative bg-white rounded-xl p-4 ring-1 ring-gray-900/5 shadow-2xl nex-tooltip block">
-            <img
-              src="https://lh3.googleusercontent.com/p/AF1QipPcc7Jz7odcsxtYOP45v-RxdOVUWzssW9qpskAW=s680-w680-h510-rw"
+            <img src="https://lh3.googleusercontent.com/p/AF1QipPcc7Jz7odcsxtYOP45v-RxdOVUWzssW9qpskAW=s680-w680-h510-rw"
               alt="NexInnovation Logo" class="h-24 w-24 object-contain md:h-32 md:w-32">
           </a>
         </div>
       </div>
 
-      <!-- CHANGED: Reverted to Blue styling -->
+      <!-- Reverted to Blue styling -->
       <span
         class="inline-block py-1 px-3 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs font-semibold tracking-wide uppercase mb-6 animate-fade-in-up"
         style="animation-delay: 0.1s;">
@@ -414,16 +439,16 @@
         Gujarati medium students.
       </p>
 
-      <!-- <div class="flex flex-col sm:flex-row justify-center gap-4 animate-entry hov" style="animation-delay: 0.4s">
+      <!-- CHANGED: Restored Search Bar next to Button -->
+      <div class="flex justify-center gap-4 animate-fade-in-up flex-col sm:flex-row items-center" style="animation-delay: 0.4s;">
+        <!-- New Search Bar -->
+        <div class="relative w-full max-w-md">
+            <input type="text" id="search-input" placeholder="Search practicals (e.g. Lens, Gate)..." class="w-full pl-12 pr-4 py-3 rounded-xl text-slate-900 bg-white/90 backdrop-blur-sm border-0 shadow-lg focus:ring-4 focus:ring-blue-500/30 transition-all text-lg font-medium">
+            <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+        
         <a href="#class-12"
-          class="bg-white text-slate-900 hover:bg-blue-50 hover:text-blue-700 px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-white/10 transition-all hover:scale-105 hover:shadow-white/20">
-          Start Experimenting
-        </a>
-      </div> -->
-
-      <div class="flex justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.4s;">
-        <a href="#class-12"
-          class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white rounded-xl bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-1">
+          class="px-8 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-1 whitespace-nowrap">
           Start Experimenting
         </a>
       </div>
@@ -431,12 +456,36 @@
     </div>
   </header>
 
+  <!-- Statistics Bar -->
+  <section class="bg-white border-b border-slate-200 py-8 relative z-20 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-100">
+            <div class="space-y-1">
+                <div class="text-3xl font-extrabold text-blue-600">15+</div>
+                <div class="text-xs font-semibold uppercase tracking-wide text-slate-500">Virtual Labs</div>
+            </div>
+            <div class="space-y-1">
+                <div class="text-3xl font-extrabold text-blue-600">100%</div>
+                <div class="text-xs font-semibold uppercase tracking-wide text-slate-500">NCERT Aligned</div>
+            </div>
+            <div class="space-y-1">
+                <div class="text-3xl font-extrabold text-blue-600">2</div>
+                <div class="text-xs font-semibold uppercase tracking-wide text-slate-500">Languages (Eng/Guj)</div>
+            </div>
+            <div class="space-y-1">
+                <div class="text-3xl font-extrabold text-blue-600">Free</div>
+                <div class="text-xs font-semibold uppercase tracking-wide text-slate-500">For Everyone</div>
+            </div>
+        </div>
+    </div>
+  </section>
+
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-32">
     <!-- Class 12 Section -->
     <section id="class-12" class="scroll-mt-32">
       <div class="flex items-center gap-4 mb-12 animate-entry">
-        <!-- CHANGED: Reverted to Blue -->
+        <!-- Reverted to Blue -->
         <div
           class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-600 text-white font-bold text-xl shadow-lg shadow-blue-500/30">
           12
@@ -457,10 +506,10 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 animate-entry">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 animate-entry" id="optics-grid">
 
         <!-- Card: Convex Lens -->
-        <!-- CHANGED: Hover border back to blue -->
+        <!-- Hover border back to blue -->
         <a href="convex-lens.html"
           class="practical-card group relative bg-white rounded-2xl p-6 border border-slate-200 h-full flex flex-col hover:border-blue-300">
           <div class="absolute top-4 right-4">
@@ -475,7 +524,7 @@
             </span>
           </div>
 
-          <!-- CHANGED: Icon bg to Blue -->
+          <!-- Icon bg to Blue -->
           <div
             class="icon-box w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:shadow-md">
             <!-- Convex Lens (Rotated Eye - No Center) -->
@@ -487,7 +536,7 @@
 
           <div class="mb-4">
             <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-              <!-- CHANGED: Hover text back to blue -->
+              <!-- Hover text back to blue -->
               <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                 Convex Lens
               </h3>
@@ -504,7 +553,7 @@
 
           <div class="pt-6 mt-auto border-t border-slate-100 flex items-center justify-between">
             <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Optical Bench</span>
-            <!-- CHANGED: CTA Button to Blue -->
+            <!-- CTA Button to Blue -->
             <button
               class="bg-blue-100 text-blue-700 px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm">
               Launch
@@ -670,7 +719,7 @@
       </div>
 
       <!-- ELECTRONICS SUBSECTION -->
-      <!-- CHANGED: Reverted to Blue-500 border -->
+      <!-- Reverted to Blue-500 border -->
       <div class="mb-10 pl-4 border-l-4 border-blue-500 animate-entry">
         <h3 class="text-2xl font-bold text-slate-800">Electronics</h3>
         <p class="text-slate-500 text-sm">Semiconductors & Digital Logic</p>
@@ -717,9 +766,9 @@
     </section>
 
     <!-- Promotional Section for NexInnovation -->
-    <!-- CHANGED: Removed static bg-blue-900, added bg-slate-900 as base -->
+    <!-- Removed static bg-blue-900, added bg-slate-900 as base -->
     <section class="bg-slate-900 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden my-16">
-      <!-- CHANGED: Added the moving gradient background div -->
+      <!-- Added the moving gradient background div -->
       <div
         class="absolute inset-0 bg-gradient-to-r from-slate-900 via-indigo-900 to-slate-900 animate-gradient-x opacity-90">
       </div>
@@ -815,7 +864,7 @@
             class="icon-box w-14 h-14 bg-slate-200 text-slate-500 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:shadow-md">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
               </path>
             </svg>
           </div>
@@ -839,13 +888,84 @@
         </div>
       </div>
     </section>
+
+    <!-- FEEDBACK / REQUEST SECTION (New) -->
+    <section class="mb-20 animate-entry">
+      <!-- Replaced static gradient with bg-slate-900 base -->
+      <div class="bg-slate-900 rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden shadow-2xl">
+        
+        <!-- Inserted the moving gradient background -->
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-indigo-900 to-slate-900 animate-gradient-x opacity-90"></div>
+
+        <!-- Background Decor -->
+        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white opacity-10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-white opacity-10 rounded-full blur-3xl"></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <div class="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-xl backdrop-blur-sm mb-6 text-2xl">
+            💡
+          </div>
+          <h2 class="text-3xl font-bold mb-4">Don't see the practical you need?</h2>
+          <p class="text-blue-100 text-lg mb-8">
+            We are constantly adding new experiments. Let us know which Physics practical you want to see next on NexInnovation!
+          </p>
+          
+          <!-- Added z-20 to ensure it is clickable above all background layers -->
+          <a href="mailto:support@nexinnovation.in?subject=New%20Practical%20Request&body=Hi%20Team%2C%0A%0AI%20would%20like%20to%20request%20a%20simulation%20for%3A%20%5BEnter%20Topic%20Name%5D%0A%0AClass%3A%20%5B11%20or%2012%5D%0A%0AThank%20you!" 
+             class="relative z-20 inline-flex items-center gap-2 bg-white text-blue-700 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-blue-50 transition-all hover:scale-105 hover:shadow-xl">
+            <span>Request a Simulation</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+          </a>
+          
+          <p class="mt-4 text-xs text-blue-200 opacity-80">We read every feedback request!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="mb-20 animate-entry bg-blue-50 rounded-3xl p-8 md:p-12">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-slate-900 mb-4">Why Choose NexInnovation Labs?</h2>
+        <p class="text-slate-600 max-w-2xl mx-auto">Experience the future of practical learning with tools designed for clarity, precision, and ease of use.</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 text-center">
+          <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 text-2xl">🧪</div>
+          <h3 class="font-bold text-lg mb-2">No Lab Gear Needed</h3>
+          <p class="text-sm text-slate-500">Perform experiments anywhere, anytime without expensive equipment.</p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 text-center">
+          <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 text-2xl">📐</div>
+          <h3 class="font-bold text-lg mb-2">Precise Calculations</h3>
+          <p class="text-sm text-slate-500">Get accurate readings and visualize data with interactive graphs.</p>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 text-center">
+          <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mx-auto mb-4 text-2xl">🌍</div>
+          <h3 class="font-bold text-lg mb-2">Accessible Anywhere</h3>
+          <p class="text-sm text-slate-500">Optimized for all devices - mobile, tablet, and desktop.</p>
+        </div>
+        
+        <!-- Feature 4 -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 text-center">
+          <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center mx-auto mb-4 text-2xl">⚡</div>
+          <h3 class="font-bold text-lg mb-2">Instant Feedback</h3>
+          <p class="text-sm text-slate-500">See results immediately and understand concepts faster.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Footer -->
   <footer class="bg-slate-900 text-slate-400 py-16 border-t border-slate-800">
     <div class="w-full px-6 lg:px-10">
       <!-- Updated container to match navbar width style -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
         <div class="col-span-1 md:col-span-1">
           <div class="flex items-center gap-3 mb-6">
             <a href="https://nexinnovation.in" class="flex items-center gap-3 group nex-tooltip nex-tooltip-bottom">
@@ -869,23 +989,10 @@
           </p>
         </div>
 
+        <!-- Spacer Column -->
         <div></div>
 
-        <div>
-          <h4 class="text-white font-bold mb-6">Quick Links</h4>
-          <ul class="space-y-3 text-sm">
-            <li>
-              <a href="https://nexinnovation.in" class="hover:text-blue-400 transition-colors nex-tooltip">Main Site</a>
-            </li>
-            <li>
-              <a href="#class-12" class="hover:text-blue-400 transition-colors">Class 12 Practicals</a>
-            </li>
-            <li>
-              <a href="#class-11" class="hover:text-blue-400 transition-colors">Class 11 Practicals</a>
-            </li>
-          </ul>
-        </div>
-
+        <!-- Removed Quick Links, kept Contact in the 3rd column -->
         <div>
           <h4 class="text-white font-bold mb-6">Contact</h4>
           <ul class="space-y-4 text-sm">
@@ -896,7 +1003,7 @@
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
                 </path>
               </svg>
-              <!-- CHANGED: Added nex-tooltip-mail class to customize tooltip text -->
+              <!-- Added nex-tooltip-mail class to customize tooltip text -->
               <a href="mailto:support@nexinnovation.in"
                 class="hover:text-blue-400 transition-colors nex-tooltip nex-tooltip-mail">support@nexinnovation.in</a>
             </li>
@@ -908,17 +1015,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
               </svg>
-              <!-- CHANGED: Added Address -->
+              <!-- Added Address -->
               <span>
                 417, Green Aristo Plaza,<br />
                 Canal Road, Jahanirpura,<br />
                 Surat, 395005, India
               </span>
             </li>
-            <!-- CHANGED: Added Google Maps Link -->
+            <!-- Added Google Maps Link -->
             <li class="pl-8">
               <a href="https://maps.app.goo.gl/bNNRKq1idudBK9Ug6" target="_blank" rel="noopener noreferrer"
-                class="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1 transition-colors">
+                class="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1 transition-colors nex-tooltip nex-tooltip-map">
                 View on Map
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -986,6 +1093,8 @@
       const headerSection = document.querySelector("header"); // Select the main Hero Header
 
       function handleScroll() {
+        if (!nav || !menu) return; // Safety check
+
         // Calculate the threshold dynamically
         // Use header height minus navbar height (approx 80px) so it transitions just before hitting white content
         const triggerPoint = headerSection
@@ -1002,11 +1111,53 @@
             nav.classList.add("bg-transparent");
           }
         }
+        
+        // Scroll Top Button Logic
+        const scrollTopBtn = document.getElementById('scroll-top-btn');
+        if(scrollTopBtn) { // Safety check
+            if(window.scrollY > 300) {
+                scrollTopBtn.classList.remove('hidden-btn');
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.add('hidden-btn');
+                scrollTopBtn.classList.remove('visible');
+            }
+        }
       }
 
       window.addEventListener("scroll", handleScroll);
       // Run once on load
       handleScroll();
+      
+      // Scroll Top Click
+      const scrollTopBtn = document.getElementById('scroll-top-btn');
+      if(scrollTopBtn) {
+          scrollTopBtn.addEventListener('click', () => {
+              window.scrollTo({top: 0, behavior: 'smooth'});
+          });
+      }
+      
+      // Real-time Search Logic
+      const searchInput = document.getElementById('search-input');
+      const cards = document.querySelectorAll('.practical-card');
+      
+      if(searchInput) {
+          searchInput.addEventListener('input', (e) => {
+              const term = e.target.value.toLowerCase();
+              
+              cards.forEach(card => {
+                  const title = card.querySelector('h3').innerText.toLowerCase();
+                  const text = card.innerText.toLowerCase();
+                  
+                  if(text.includes(term)) {
+                      card.parentElement.style.display = 'flex'; // Ensure parent container is visible
+                      card.style.display = 'flex';
+                  } else {
+                      card.style.display = 'none';
+                  }
+              });
+          });
+      }
     });
   </script>
 </body>
